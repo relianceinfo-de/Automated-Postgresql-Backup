@@ -131,7 +131,7 @@
 		
 4. Prepare for mounting: Use an SSD as a temporary path. Make sure user has access to the temporary path
 
-        sudo mkdir {/mnt/resource/blobfusetmp} -p
+        sudo mkdir /mnt/resource/blobfusetmp -p
         sudo chown root /mnt/resource/blobfusetmp
  
 5. Create a directory where backups will be taken
