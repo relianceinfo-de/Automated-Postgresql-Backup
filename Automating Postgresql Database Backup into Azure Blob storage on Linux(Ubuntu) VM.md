@@ -1,6 +1,36 @@
 # Automating Postgresql Database Backup into Azure Blob storage on Linux(Ubuntu) VM 
 
-## TASK 1: Install postgresql on the linux machine
+## TASK 1: Configure all preliminary packages
+### Step 1: Run the following command to setup necessary packages
+	sudo apt update
+
+	wget --content-disposition "https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb"
+
+	#sudo dpkg -i packages-microsoft-prod.deb
+	#rm packages-microsoft-prod.deb
+
+	sudo apt install apt-transport-https
+	sudo apt update
+
+	#sudo apt install -y dotnet-sdk-6.0
+	sudo apt install -y dotnet-sdk-7.0
+
+	sudo apt install -y powershell
+
+	sudo apt install -y ca-certificates curl apt-transport-https lsb-release gnupg
+
+	curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+
+	AZ_REPO=$(lsb_release -cs)
+
+	echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+
+	sudo apt update
+
+	sudo apt install -y azure-cli
+
+
+## TASK 2: Install postgresql on the linux machine
 
 ### Step 1: Setup necessary environment for the postgresql backup 
 
@@ -25,7 +55,7 @@
         
         psql
     
-## TASK 2: Enable connection to the remote postgresql server
+## TASK 3: Enable connection to the remote postgresql server
 
 ### Step 1: Edit the pg config file to support remote server connection
 1. Edit the pg config file to support remote server connection. change "localhost" to "*"
@@ -78,7 +108,7 @@
  
  
  
-## TASK 3: mount Azure Blob Storage as a file system with BlobFuse v2
+## TASK 4: mount Azure Blob Storage as a file system with BlobFuse v2
 
 
 ### Step 1: Install BlobFuse2 on Linux
@@ -155,7 +185,7 @@
 
        sudo blobfuse2 mount ~/contoso-backups --config-file=./config.yaml
     
-## TASK 4: Backing up and restoring the Postgresql database
+## TASK 5: Backing up and restoring the Postgresql database
 
 ### Step 1: Create the shell script to backup the database
 
