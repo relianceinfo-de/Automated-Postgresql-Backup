@@ -53,9 +53,10 @@
     
         vi .pgpass
     
- 2. Edit the file to contain database login credentials. Replace the texts with necessary database information
+ 2. Edit the file to contain database login credentials. Replace the password with necessary database information
  
-        hostname:port:database:username:password
+        
+		trdopmadtrial-db.postgres.database.azure.com:5432:*:grifadmin:<password_here>
     
  3. Set the permissions on the file to 600 to keep it secure i.e restrict read, write and execute access to only owner
        
@@ -68,7 +69,8 @@
      
 5. Test connection to the remote server, replacing the placeholder(coiling bracket) with necessary server paramenters
     
-        psql -h {Servername} -U {Username} {DatabaseName} 
+        
+		psql -h trdopmadtrial-db.postgres.database.azure.com -U grifadmin CONTOSO_TEST_HYDRASTORE 
         
 6. Restart the server after making above changes
 
@@ -128,7 +130,7 @@
 		  negative-entry-expiration-sec: 240
 
 		file_cache:
-		  path: {/home/user/tempcache}
+		  path: /home/grifadmin/tempcache
 		  timeout-sec: 120
 		  max-size-mb: 4096
 		  attr_cache:
@@ -136,11 +138,11 @@
 
 		azstorage:
 		  type: block
-		  account-name: {AzureStorage_AccName_here}
-		  endpoint: {storage account endpoint (example - https://account-name.blob.core.windows.net)}
-		  mode: {key|sas|spn|msi kind of authentication to be used}
-		  sas: {sas key if selected above}
-		  container: {contoso-backups}
+		  account-name: trdopmadtrialstore
+		  endpoint: https://trdopmadtrialstore.blob.core.windows.net
+		  mode: sas
+		  sas: {sas_key}
+		  container: contoso-backups
 		
 2. Restrict access to the file so other users can not read it
 		
@@ -165,19 +167,19 @@
  
        	#!/bin/bash
 
-       		BACKUP_DIR=<"/root/contoso-backups/">
+       		BACKUP_DIR="/root/contoso-backups/"
 
-		DB_NAME=<"DatabaseName1">
+		DB_NAME="CONTOSO_PX_REFERENCE"
 
 		FORMATTED_DATE=$(date +"-%Y%m%d_%H%M%S")
 		FILE_NAME="${BACKUP_DIR}${DB_NAME}${FORMATTED_DATE}.sql"
 
-		#DB_NAME2=<"DatabaseName2">
-		#FILE_NAME2="${BACKUP_DIR}${DB_NAME2}${FORMATTED_DATE}.sql"
+		DB_NAME2="CONTOSO_TEST_PX_REFERENCE"
+		FILE_NAME2="${BACKUP_DIR}${DB_NAME2}${FORMATTED_DATE}.sql"
 
 		echo $FILE_NAME
-		pg_dump -h <ServerName> -U <UserName> <DatabaseName1> > $FILE_NAME
-		#pg_dump -h <ServerName> -U <UserName> <DatabaseName2> > $FILE_NAME2
+		pg_dump -h trdopmadtrial-db.postgres.database.azure.com -U grifadmin CONTOSO_PX_REFERENCE > $FILE_NAME
+		pg_dump -h trdopmadtrial-db.postgres.database.azure.com -U grifadmin CONTOSO_TEST_PX_REFERENCE > $FILE_NAME2
 
  3. Make the file executable
   	
@@ -200,9 +202,9 @@
  
         00 08 * * * {/root/postgresql-backup.sh} 
         
- 3. Check the backupdir to confirm successful database backup e.g
+ 3. Check the backupdir to confirm successful database backup 
  
-        vi {/root/contoso-backups}
+        vi /root/contoso-backups
         
         
         
