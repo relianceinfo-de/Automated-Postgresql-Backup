@@ -143,10 +143,12 @@
 1. Create an authorization file to the blob storage(config.yaml) and paste the below text. Note the accountName is the name of the storage account, and not the full URL. 
 
         vi config.yaml 
-	
-        logging:
+
+Then paste the below script
+
+        	logging:
 		  type: syslog
-		  level: log_debug
+		  level: log_debug	
 
 		components:
 		  - libfuse
@@ -197,7 +199,7 @@
  
        	#!/bin/bash
 
-       		BACKUP_DIR="/root/contoso-backups/"
+       	BACKUP_DIR="/root/contoso-backups/"
 
 		DB_NAME="CONTOSO_PX_REFERENCE"
 
@@ -213,10 +215,12 @@
 
  3. Make the file executable
   	
-	chmod a+x /root/postgresql-backup.sh
+		chmod a+x /root/postgresql-backup.sh
  4. To restore the database, create a dbrestore.sh file and paste the below command.
  	
 		vi dbrestore.sh
+	Then paste the script below
+	
 			#!/bin/bash
 
 
