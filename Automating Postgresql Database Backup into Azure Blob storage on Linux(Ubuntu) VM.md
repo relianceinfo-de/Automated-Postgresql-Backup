@@ -53,7 +53,7 @@
     
         vi .pgpass
     
- 2. Edit the file to contain database login credentials. Replace the password with necessary database information
+ 2. Edit the file to contain database login credentials. Replace the password with the right information
  
         
 		trdopmadtrial-db.postgres.database.azure.com:5432:*:grifadmin:<password_here>
@@ -81,7 +81,7 @@
 ## TASK 3: mount Azure Blob Storage as a file system with BlobFuse v2
 
 
-### Step 1: Install BlobFuse v1 on Linux
+### Step 1: Install BlobFuse2 on Linux
 
  1. Check the version of your Linux to confirm it support the package. Follow path for supported distros https://github.com/Azure/azure-storage-fuse/releases
 
@@ -102,11 +102,11 @@
 4. Prepare for mounting: Use an SSD as a temporary path. Make sure user has access to the temporary path
 
         sudo mkdir {/mnt/resource/blobfusetmp} -p
-        sudo chown <youruser> /mnt/resource/blobfusetmp
+        sudo chown root /mnt/resource/blobfusetmp
  
 5. Create a directory where backups will be taken
 				
-		mkdir {~/backupdirectory} 
+		mkdir ~/contoso-backups 
 		
 ### Step 2: Authorize access to the storage account. 
 
@@ -161,9 +161,9 @@
 
  1. In the home directory create a postgresql-backup.sh file
  
-        vi {postgresql-backup.sh}
+        vi postgresql-backup.sh
    
- 2. Edit the file and replace the parameters in angular bracket(<>) with correct details. the <b> BACKUP_DIR </b> is a reference path to where the backup would be taken
+ 2. The <b> BACKUP_DIR </b> is a reference path to where the backup would be taken
  
        	#!/bin/bash
 
@@ -200,7 +200,7 @@
         
  2. Edit the file to backup the database accordingly. For example the command below take a backup of the database daily by 8am based on the system time
  
-        00 08 * * * {/root/postgresql-backup.sh} 
+        00 08 * * * /root/postgresql-backup.sh 
         
  3. Check the backupdir to confirm successful database backup 
  
