@@ -1,4 +1,4 @@
-# Automating Postgresql Database Backup into Azure Blob storage on Linux(Ubuntu) VM 
+# Automating Operamadic Postgresql Database Backup into Azure Blob storage on Linux(Ubuntu 20.04) VM 
 
 ## TASK 1: Configure all preliminary packages
 ### Step 1: Run the following command to setup necessary packages
