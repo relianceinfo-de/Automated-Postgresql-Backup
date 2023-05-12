@@ -6,13 +6,13 @@
 
 	wget --content-disposition "https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb"
 
-	#sudo dpkg -i packages-microsoft-prod.deb
-	#rm packages-microsoft-prod.deb
+	sudo dpkg -i packages-microsoft-prod.deb
+	rm packages-microsoft-prod.deb
 
 	sudo apt install apt-transport-https
 	sudo apt update
 
-	#sudo apt install -y dotnet-sdk-6.0
+	sudo apt install -y dotnet-sdk-6.0
 	sudo apt install -y dotnet-sdk-7.0
 
 	sudo apt install -y powershell
